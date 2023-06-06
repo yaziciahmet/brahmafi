@@ -19,3 +19,5 @@ ALTER TABLE pool_snapshot ADD CONSTRAINT pool_fk
 FOREIGN KEY (pool_id) REFERENCES pool(id);
 
 CREATE INDEX pool_snapshot_pool_idx ON pool_snapshot(pool_id);
+
+CREATE INDEX pool_snapshot_block_number ON pool_snapshot(block_number);
