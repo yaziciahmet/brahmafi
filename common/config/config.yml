@@ -1,0 +1,8 @@
+db:
+  url: ""
+  migrations:
+    dir: "file://migrations"
+
+logger:
+  name: brahmafi
+  level: INFO
