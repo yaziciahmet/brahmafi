@@ -1,0 +1,2 @@
+DROP TABLE pool CASCADE;
+DROP TABLE pool_snapshot CASCADE;

@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"brahmafi/common/config"
+	"brahmafi/common/logger"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
@@ -15,16 +16,20 @@ type Database struct {
 	ctx    context.Context
 	pool   *pgxpool.Pool
 	config *config.DatabaseConfig
+	log    logger.Logger
 }
 
-func NewDatabase(ctx context.Context, config *config.DatabaseConfig) *Database {
+func NewDatabase(ctx context.Context, config *config.DatabaseConfig, log logger.Logger) *Database {
 	return &Database{
 		ctx:    ctx,
 		config: config,
+		log:    log,
 	}
 }
 
 func (d *Database) Connect() error {
+	d.log.Info("Connecting to database")
+
 	pool, err := pgxpool.New(d.ctx, d.config.DbUrl)
 	if err != nil {
 		return err
@@ -36,10 +41,11 @@ func (d *Database) Connect() error {
 
 	d.pool = pool
 
+	d.log.Info("Successfully connected to database", "db_url", d.config.DbUrl)
 	return nil
 }
 
-func (d *Database) Migrate(migrationDir string) error {
+func (d *Database) Migrate() error {
 	m, err := migrate.New(d.config.MigrationsDir, d.config.DbUrl)
 	if err != nil {
 		return err
@@ -48,14 +54,15 @@ func (d *Database) Migrate(migrationDir string) error {
 	if err := m.Up(); err != nil {
 		switch err {
 		case migrate.ErrNoChange:
-			return nil
+			break
 		case migrate.ErrNilVersion:
-			return nil
+			break
 		default:
 			return err
 		}
 	}
 
+	d.log.Info("Migrations ran successfully")
 	return nil
 }
 

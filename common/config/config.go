@@ -13,20 +13,20 @@ type Configuration interface {
 	GetLoggerConfig() *LoggerConfig
 }
 
-type KoanfConfig struct {
+type KoanfConfiguration struct {
 	configEngine *koanf.Koanf
 	dbConf       *DatabaseConfig
 	loggerConf   *LoggerConfig
 }
 
-func NewConfiguration() (*KoanfConfig, error) {
+func NewConfiguration() (Configuration, error) {
 	k := koanf.New(".")
 
 	if err := k.Load(file.Provider("common/config/config.yml"), yaml.Parser()); err != nil {
 		return nil, fmt.Errorf("error loading config file: %w", err)
 	}
 
-	config := KoanfConfig{
+	config := KoanfConfiguration{
 		configEngine: k,
 		dbConf:       NewDatabaseConfig(k),
 		loggerConf:   NewLoggerConfig(k),
@@ -35,10 +35,10 @@ func NewConfiguration() (*KoanfConfig, error) {
 	return &config, nil
 }
 
-func (k *KoanfConfig) GetDatabaseConfig() *DatabaseConfig {
+func (k *KoanfConfiguration) GetDatabaseConfig() *DatabaseConfig {
 	return k.dbConf
 }
 
-func (k *KoanfConfig) GetLoggerConfig() *LoggerConfig {
+func (k *KoanfConfiguration) GetLoggerConfig() *LoggerConfig {
 	return k.loggerConf
 }

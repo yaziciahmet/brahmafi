@@ -1,5 +1,5 @@
 db:
-  url: ""
+  url: "postgres://postgres:postgres@localhost:5432/brahmafi?sslmode=disable"
   migrations:
     dir: "file://migrations"
 
