@@ -8,6 +8,7 @@ import (
 	"brahmafi/common/config"
 	"brahmafi/common/db"
 	"brahmafi/common/logger"
+	"brahmafi/internal/repository"
 )
 
 func main() {
@@ -28,4 +29,6 @@ func main() {
 	if err = db.Migrate(); err != nil {
 		log.Fatal("failed to run migrations", "err", err)
 	}
+
+	_ = repository.NewPoolRepository(ctx, db)
 }

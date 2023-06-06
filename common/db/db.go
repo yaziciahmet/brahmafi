@@ -66,6 +66,7 @@ func (d *Database) Migrate() error {
 	return nil
 }
 
+// get pool connection manager
 func (d *Database) GetPool() *pgxpool.Pool {
 	return d.pool
 }

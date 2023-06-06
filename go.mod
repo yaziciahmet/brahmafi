@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/golang-migrate/migrate/v4 v4.16.1
+	github.com/google/uuid v1.3.0
 	github.com/hashicorp/go-hclog v1.5.0
 	github.com/jackc/pgx/v5 v5.3.1
 	github.com/knadh/koanf/parsers/yaml v0.1.0
