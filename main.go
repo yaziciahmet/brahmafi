@@ -46,7 +46,9 @@ func main() {
 		brahmaService.AddPool(poolAddress)
 	}
 
-	go brahmaService.WatchBlocks()
+	if err = brahmaService.WatchBlocks(); err != nil {
+		log.Fatal("Failed to start watching blocks", "err", err)
+	}
 
 	server := api.NewServer(log, brahmaService, config.GetApiConfig())
 	server.Listen()

@@ -22,18 +22,22 @@ func NewBrahmaService(log logger.Logger, repository *repository.PoolRepository, 
 	}
 }
 
-func (b *BrahmaService) WatchBlocks() {
+func (b *BrahmaService) WatchBlocks() error {
 	ch, err := b.poolManager.SubscribeBlocks(0)
 	if err != nil {
-		b.log.Fatal("Failed to subscribe to blocks", "err", err)
+		return err
 	}
 
-	for snapshot := range ch {
-		b.log.Info("Got", "snapshot", snapshot)
-		if err := b.repository.CreatePoolSnapshot(snapshot); err != nil {
-			b.log.Error("Failed to insert snapshot into repository", "err", err)
+	go func() {
+		for snapshot := range ch {
+			b.log.Info("Got", "snapshot", snapshot)
+			if err := b.repository.CreatePoolSnapshot(snapshot); err != nil {
+				b.log.Error("Failed to insert snapshot into repository", "err", err)
+			}
 		}
-	}
+	}()
+
+	return nil
 }
 
 func (b *BrahmaService) GetPoolSnapshotByBlock(poolId, blockNumber string) (*models.PoolSnapshot, error) {
