@@ -1,2 +1,5 @@
 .env
 build
+contracts/artifacts
+contracts/cache
+contracts/node_modules

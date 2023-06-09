@@ -8,16 +8,16 @@ import (
 
 type PoolSnapshot struct {
 	Id            uuid.UUID
-	PoolId        uuid.UUID
-	Token0Balance int
-	Token1Balance int
-	Tick          int
-	BlockNumber   int
+	PoolId        string
+	Token0Balance int64
+	Token1Balance int64
+	Tick          int64
+	BlockNumber   int64
 	TakenAt       time.Time
 }
 
 type PoolSnapshotWithTokenDelta struct {
 	PoolSnapshot
-	Token0Delta *int
-	Token1Delta *int
+	Token0Delta *int64
+	Token1Delta *int64
 }

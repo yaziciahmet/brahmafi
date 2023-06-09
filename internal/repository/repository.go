@@ -67,7 +67,7 @@ func NewPoolRepository(ctx context.Context, db *db.Database) *PoolRepository {
 }
 
 func (p *PoolRepository) CreatePool(pool *models.Pool) error {
-	_, err := p.db.GetPool().Exec(p.ctx, createPoolQuery, pool.Id, pool.Address, pool.ChainId, pool.ChainName)
+	_, err := p.db.GetPool().Exec(p.ctx, createPoolQuery, pool.Address, pool.ChainId, pool.ChainName)
 	return err
 }
 

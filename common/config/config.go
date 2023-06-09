@@ -11,12 +11,14 @@ import (
 type Configuration interface {
 	GetDatabaseConfig() *DatabaseConfig
 	GetLoggerConfig() *LoggerConfig
+	GetChainConfig() *ChainConfig
 }
 
 type KoanfConfiguration struct {
 	configEngine *koanf.Koanf
 	dbConf       *DatabaseConfig
 	loggerConf   *LoggerConfig
+	chainConf    *ChainConfig
 }
 
 func NewConfiguration() (Configuration, error) {
@@ -30,6 +32,7 @@ func NewConfiguration() (Configuration, error) {
 		configEngine: k,
 		dbConf:       NewDatabaseConfig(k),
 		loggerConf:   NewLoggerConfig(k),
+		chainConf:    NewChainConfig(k),
 	}
 
 	return &config, nil
@@ -41,4 +44,8 @@ func (k *KoanfConfiguration) GetDatabaseConfig() *DatabaseConfig {
 
 func (k *KoanfConfiguration) GetLoggerConfig() *LoggerConfig {
 	return k.loggerConf
+}
+
+func (k *KoanfConfiguration) GetChainConfig() *ChainConfig {
+	return k.chainConf
 }

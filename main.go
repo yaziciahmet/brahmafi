@@ -8,6 +8,7 @@ import (
 	"brahmafi/common/config"
 	"brahmafi/common/db"
 	"brahmafi/common/logger"
+	"brahmafi/internal/chain"
 	"brahmafi/internal/repository"
 )
 
@@ -30,5 +31,19 @@ func main() {
 		log.Fatal("failed to run migrations", "err", err)
 	}
 
-	_ = repository.NewPoolRepository(ctx, db)
+	poolRepository := repository.NewPoolRepository(ctx, db)
+
+	uniswapPoolManager, err := chain.NewUniswapPoolManager(ctx, log.Clone("pool_manager"), config.GetChainConfig())
+	if err != nil {
+		log.Fatal("failed to create uniswap pool manager", "err", err)
+	}
+
+	// ch, err := uniswapPoolManager.SubscribeBlocks(0)
+	// if err != nil {
+	// 	log.Fatal("failed to subscribe to blocks", "err", err)
+	// }
+
+	// for snapshot := range ch {
+	// 	log.Info("Got", "snapshot", snapshot)
+	// }
 }
