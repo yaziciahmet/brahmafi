@@ -1,4 +1,4 @@
-# BrahmaFi UniSwap Pool Tracker
+# UniSwap Pool Tracker
 
 ## Setup
 ```bash
