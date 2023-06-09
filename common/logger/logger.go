@@ -2,6 +2,7 @@ package logger
 
 import (
 	"brahmafi/common/config"
+	"io"
 	"os"
 
 	"github.com/hashicorp/go-hclog"
@@ -15,6 +16,7 @@ type Logger interface {
 	Error(msg string, args ...interface{})
 	Fatal(msg string, args ...interface{})
 	Clone(name string) Logger
+	GetWriter() io.Writer
 }
 
 type hcLogger struct {
@@ -65,4 +67,8 @@ func (h *hcLogger) Fatal(msg string, args ...interface{}) {
 
 func (h *hcLogger) Clone(name string) Logger {
 	return &hcLogger{logger: h.logger.Named(name)}
+}
+
+func (h *hcLogger) GetWriter() io.Writer {
+	return h.logger.StandardWriter(&hclog.StandardLoggerOptions{})
 }

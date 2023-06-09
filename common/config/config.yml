@@ -5,10 +5,13 @@ db:
 
 logger:
   name: brahmafi
-  level: DEBUG
+  level: INFO
 
 chain:
   rpc-url: "wss://mainnet.infura.io/ws/v3/d55be5e641974915a3d3fadc53bd3e88"
   block-rate: 12
   pools:
     - "0xCBCdF9626bC03E24f779434178A73a0B4bad62eD"
+
+api:
+  port: ":8080"

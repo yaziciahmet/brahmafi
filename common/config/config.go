@@ -12,6 +12,7 @@ type Configuration interface {
 	GetDatabaseConfig() *DatabaseConfig
 	GetLoggerConfig() *LoggerConfig
 	GetChainConfig() *ChainConfig
+	GetApiConfig() *ApiConfig
 }
 
 type KoanfConfiguration struct {
@@ -19,6 +20,7 @@ type KoanfConfiguration struct {
 	dbConf       *DatabaseConfig
 	loggerConf   *LoggerConfig
 	chainConf    *ChainConfig
+	apiConf      *ApiConfig
 }
 
 func NewConfiguration() (Configuration, error) {
@@ -33,6 +35,7 @@ func NewConfiguration() (Configuration, error) {
 		dbConf:       NewDatabaseConfig(k),
 		loggerConf:   NewLoggerConfig(k),
 		chainConf:    NewChainConfig(k),
+		apiConf:      NewApiConfig(k),
 	}
 
 	return &config, nil
@@ -48,4 +51,8 @@ func (k *KoanfConfiguration) GetLoggerConfig() *LoggerConfig {
 
 func (k *KoanfConfiguration) GetChainConfig() *ChainConfig {
 	return k.chainConf
+}
+
+func (k *KoanfConfiguration) GetApiConfig() *ApiConfig {
+	return k.apiConf
 }

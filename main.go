@@ -8,6 +8,7 @@ import (
 	"brahmafi/common/config"
 	"brahmafi/common/db"
 	"brahmafi/common/logger"
+	"brahmafi/internal/api"
 	"brahmafi/internal/chain"
 	"brahmafi/internal/core"
 	"brahmafi/internal/repository"
@@ -46,4 +47,7 @@ func main() {
 	}
 
 	go brahmaService.WatchBlocks()
+
+	server := api.NewServer(log, brahmaService, config.GetApiConfig())
+	server.Listen()
 }

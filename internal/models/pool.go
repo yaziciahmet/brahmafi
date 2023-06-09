@@ -1,5 +1,5 @@
 package models
 
 type Pool struct {
-	Address string
+	Address string `json:"address"`
 }
