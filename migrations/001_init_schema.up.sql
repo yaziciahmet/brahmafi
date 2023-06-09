@@ -1,16 +1,14 @@
 CREATE TABLE pool(
-    address text primary key,
-    chain_id text not null,
-    chain_name text not null
+    address text primary key
 );
 
 CREATE TABLE pool_snapshot(
     id uuid primary key default gen_random_uuid(),
     pool_id text not null,
-    token0_balance int not null,
-    token1_balance int not null,
-    tick int not null,
-    block_number int not null,
+    token0_balance bigint not null,
+    token1_balance bigint not null,
+    tick bigint not null,
+    block_number bigint not null,
     taken_at timestamptz default now() not null
 );
 

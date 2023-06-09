@@ -9,13 +9,14 @@ import (
 	"brahmafi/common/db"
 	"brahmafi/common/logger"
 	"brahmafi/internal/chain"
+	"brahmafi/internal/core"
 	"brahmafi/internal/repository"
 )
 
 func main() {
 	config, err := config.NewConfiguration()
 	if err != nil {
-		fmt.Printf("failed to load configuration, %v", err)
+		fmt.Printf("Failed to load configuration, %v", err)
 		os.Exit(1)
 	}
 
@@ -24,26 +25,25 @@ func main() {
 
 	db := db.NewDatabase(ctx, config.GetDatabaseConfig(), log.Clone("db"))
 	if err = db.Connect(); err != nil {
-		log.Fatal("failed to connect to database", "err", err)
+		log.Fatal("Failed to connect to database", "err", err)
 	}
 
 	if err = db.Migrate(); err != nil {
-		log.Fatal("failed to run migrations", "err", err)
+		log.Fatal("Failed to run migrations", "err", err)
 	}
 
 	poolRepository := repository.NewPoolRepository(ctx, db)
 
 	uniswapPoolManager, err := chain.NewUniswapPoolManager(ctx, log.Clone("pool_manager"), config.GetChainConfig())
 	if err != nil {
-		log.Fatal("failed to create uniswap pool manager", "err", err)
+		log.Fatal("Failed to create uniswap pool manager", "err", err)
 	}
 
-	// ch, err := uniswapPoolManager.SubscribeBlocks(0)
-	// if err != nil {
-	// 	log.Fatal("failed to subscribe to blocks", "err", err)
-	// }
+	brahmaService := core.NewBrahmaService(log.Clone("core"), poolRepository, uniswapPoolManager)
+	// save passed pool addresses into database if not already exists
+	for _, poolAddress := range config.GetChainConfig().Pools {
+		brahmaService.AddPool(poolAddress)
+	}
 
-	// for snapshot := range ch {
-	// 	log.Info("Got", "snapshot", snapshot)
-	// }
+	go brahmaService.WatchBlocks()
 }

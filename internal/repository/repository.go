@@ -6,14 +6,13 @@ import (
 	"brahmafi/common/db"
 	"brahmafi/internal/models"
 
-	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 )
 
 const (
 	createPoolQuery = `
-		INSERT INTO pool (id, address, chain_id, chain_name)
-		VALUES ($1, $2, $3, $4)
+		INSERT INTO pool (address)
+		VALUES ($1)
 		ON CONFLICT DO NOTHING
 	`
 	createPoolSnapshotQuery = `
@@ -67,7 +66,7 @@ func NewPoolRepository(ctx context.Context, db *db.Database) *PoolRepository {
 }
 
 func (p *PoolRepository) CreatePool(pool *models.Pool) error {
-	_, err := p.db.GetPool().Exec(p.ctx, createPoolQuery, pool.Address, pool.ChainId, pool.ChainName)
+	_, err := p.db.GetPool().Exec(p.ctx, createPoolQuery, pool.Address)
 	return err
 }
 
@@ -84,17 +83,17 @@ func (p *PoolRepository) CreatePoolSnapshot(snapshot *models.PoolSnapshot) error
 	return err
 }
 
-func (p *PoolRepository) GetPoolSnapshotOfLatestBlock(poolId uuid.UUID) (*models.PoolSnapshot, error) {
+func (p *PoolRepository) GetPoolSnapshotOfLatestBlock(poolId string) (*models.PoolSnapshot, error) {
 	row := p.db.GetPool().QueryRow(p.ctx, getPoolSnapshotOfLatestBlockQuery, poolId)
 	return p.scanPoolSnapshot(row)
 }
 
-func (p *PoolRepository) GetPoolSnapshotNearestToBlock(poolId uuid.UUID, blockNumber int) (*models.PoolSnapshot, error) {
+func (p *PoolRepository) GetPoolSnapshotNearestToBlock(poolId string, blockNumber int) (*models.PoolSnapshot, error) {
 	row := p.db.GetPool().QueryRow(p.ctx, getPoolSnapshotNearestToBlockQuery, blockNumber, poolId)
 	return p.scanPoolSnapshot(row)
 }
 
-func (p *PoolRepository) GetPoolSnapshotHistory(poolId uuid.UUID) ([]*models.PoolSnapshotWithTokenDelta, error) {
+func (p *PoolRepository) GetPoolSnapshotHistory(poolId string) ([]*models.PoolSnapshotWithTokenDelta, error) {
 	rows, err := p.db.GetPool().Query(p.ctx, getPoolSnapshotHistoryQuery, poolId)
 	if err != nil {
 		return nil, err
