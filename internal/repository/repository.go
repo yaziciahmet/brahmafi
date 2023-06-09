@@ -3,8 +3,8 @@ package repository
 import (
 	"context"
 
-	"brahmafi/common/db"
-	"brahmafi/internal/models"
+	"brahma/common/db"
+	"brahma/internal/models"
 
 	"github.com/jackc/pgx/v5"
 )

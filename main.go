@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"os"
 
-	"brahmafi/common/config"
-	"brahmafi/common/db"
-	"brahmafi/common/logger"
-	"brahmafi/internal/api"
-	"brahmafi/internal/chain"
-	"brahmafi/internal/core"
-	"brahmafi/internal/repository"
+	"brahma/common/config"
+	"brahma/common/db"
+	"brahma/common/logger"
+	"brahma/internal/api"
+	"brahma/internal/chain"
+	"brahma/internal/core"
+	"brahma/internal/repository"
 )
 
 func main() {

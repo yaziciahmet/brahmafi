@@ -3,8 +3,8 @@ package db
 import (
 	"context"
 
-	"brahmafi/common/config"
-	"brahmafi/common/logger"
+	"brahma/common/config"
+	"brahma/common/logger"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"

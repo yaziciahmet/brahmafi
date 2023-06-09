@@ -1,4 +1,4 @@
-module brahmafi
+module brahma
 
 go 1.20
 

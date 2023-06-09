@@ -1,10 +1,10 @@
 package core
 
 import (
-	"brahmafi/common/logger"
-	"brahmafi/internal/chain"
-	"brahmafi/internal/models"
-	"brahmafi/internal/repository"
+	"brahma/common/logger"
+	"brahma/internal/chain"
+	"brahma/internal/models"
+	"brahma/internal/repository"
 	"strconv"
 )
 

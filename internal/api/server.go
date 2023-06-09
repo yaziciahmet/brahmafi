@@ -1,9 +1,9 @@
 package api
 
 import (
-	"brahmafi/common/config"
-	"brahmafi/common/logger"
-	"brahmafi/internal/core"
+	"brahma/common/config"
+	"brahma/common/logger"
+	"brahma/internal/core"
 
 	"github.com/gofiber/fiber/v2"
 	fiberLogger "github.com/gofiber/fiber/v2/middleware/logger"

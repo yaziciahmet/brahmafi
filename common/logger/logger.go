@@ -1,9 +1,10 @@
 package logger
 
 import (
-	"brahmafi/common/config"
 	"io"
 	"os"
+
+	"brahma/common/config"
 
 	"github.com/hashicorp/go-hclog"
 )

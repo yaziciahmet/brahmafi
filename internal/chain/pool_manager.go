@@ -1,9 +1,6 @@
 package chain
 
 import (
-	"brahmafi/common/config"
-	"brahmafi/common/logger"
-	"brahmafi/internal/models"
 	"context"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
@@ -11,8 +8,11 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 
-	"brahmafi/internal/chain/erc20"
-	"brahmafi/internal/chain/uniswap"
+	"brahma/common/config"
+	"brahma/common/logger"
+	"brahma/internal/chain/erc20"
+	"brahma/internal/chain/uniswap"
+	"brahma/internal/models"
 )
 
 type UniswapPoolManager struct {
